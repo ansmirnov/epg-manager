@@ -2,11 +2,11 @@ from django.db import models
 import datetime
 
 
-class Channel(models.model):
+class Channel(models.Model):
     name = models.CharField(max_length=250)
 
 
-class Programme(models.model):
+class Programme(models.Model):
     channel = models.ForeignKey('Channel')
     name = models.CharField(max_length=250)
     description = models.TextField()
