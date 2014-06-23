@@ -22,6 +22,9 @@ class Programme(models.Model):
     def duration(self):
         return self.stop - self.start
 
+    def str_description(self):
+	return self.description.replace('\n', '')
+
     def __unicode__(self):
         return self.channel.name + ' - ' + self.name
 
