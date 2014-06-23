@@ -3,6 +3,7 @@ from epg_core import models as core_models
 from datetime import datetime
 import urllib3
 import json
+import re
 
 
 class MailRuChannel(models.Model):
@@ -21,11 +22,14 @@ class MailRuChannel(models.Model):
             r = http.request('GET', 'http://tv.mail.ru/ext/admtv/?sch.main=1&sch.channel=%d&sch.date=%s' % (self.mailru_id, day))
             data = json.loads(r.data)
             for programme in data['channel_type'].values()[0][0]['schedule']:
+                rdescr = http.request('GET', 'http://tv.mail.ru/ext/admtv/?sch.tv_event_id=%s&sch.channel_region_id=147' % (programme['id']))
+                descr_html = json.loads(rdescr.data)['tv_event']['descr']
+                descr = re.sub(r'\<[^>]*\>', '', descr_html)
                 core_models.Programme(
                     channel=self.core_channel,
                     name=programme['name'],
-                    description=programme.get('description', ''),
                     start=datetime.strptime(programme['start'], '%Y-%m-%d %H:%M:%S'),
                     stop=datetime.strptime(programme['stop'], '%Y-%m-%d %H:%M:%S'),
+                    description=descr,
                 ).save()
-                print programme
+#                break
