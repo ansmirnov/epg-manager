@@ -1,10 +1,10 @@
 from django.db import models
 from epg_core import models as core_models
 from datetime import datetime
+from time import sleep
 import urllib3
 import json
-import re
-
+from clean_html import clean
 
 class MailRuChannel(models.Model):
     core_channel = models.ForeignKey(core_models.Channel)
@@ -23,8 +23,7 @@ class MailRuChannel(models.Model):
             data = json.loads(r.data)
             for programme in data['channel_type'].values()[0][0]['schedule']:
                 rdescr = http.request('GET', 'http://tv.mail.ru/ext/admtv/?sch.tv_event_id=%s&sch.channel_region_id=147' % (programme['id']))
-                descr_html = json.loads(rdescr.data)['tv_event']['descr']
-                descr = re.sub(r'\<[^>]*\>', '', descr_html)
+                descr = clean(json.loads(rdescr.data)['tv_event']['descr'])
                 core_models.Programme(
                     channel=self.core_channel,
                     name=programme['name'],
@@ -32,4 +31,5 @@ class MailRuChannel(models.Model):
                     stop=datetime.strptime(programme['stop'], '%Y-%m-%d %H:%M:%S'),
                     description=descr,
                 ).save()
+                sleep(2)
 #                break
