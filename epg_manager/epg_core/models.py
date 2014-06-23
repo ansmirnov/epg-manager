@@ -8,10 +8,6 @@ class Channel(models.Model):
     def __unicode__(self):
         return self.name
 
-    def update(self):
-        for channel in self.mailruchannel_set.all():
-            channel.update()
-
     def clear_programmes(self):
         self.programme_set.all().delete()
 
