@@ -129,7 +129,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'epg_manager',
     'epg_core',
-#    'import_mailru',
+    'import_mailru',
     'import_xmltv',
     'export_csv',
 )
