@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'epg_manager',
     'epg_core',
     'import_mailru',
+    'export_csv',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -1,0 +1,2 @@
+{% for programme in programmes %}"tv_{{ programme.channel.pk }}","{{ programme.start|date:"d-m-Y h:i:s" }}",{{ programme.duration.seconds }},"{{ programme.name }}","{{ programme.desc }}"
+{% endfor %}

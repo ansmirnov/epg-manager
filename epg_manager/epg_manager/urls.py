@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+import export_csv.urls
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -7,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'epg_manager.views.home', name='home'),
-    # url(r'^epg_manager/', include('epg_manager.foo.urls')),
+    url(r'^export_csv/', include('export_csv.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -23,6 +23,9 @@ class Programme(models.Model):
     start = models.DateTimeField()
     stop = models.DateTimeField()
 
+    def duration(self):
+        return self.stop - self.start
+
     def __unicode__(self):
         return self.channel.name + ' - ' + self.name
 
