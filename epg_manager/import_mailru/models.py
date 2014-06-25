@@ -24,11 +24,15 @@ class MailRuChannel(models.Model):
             for programme in data['channel_type'].values()[0][0]['schedule']:
                 rdescr = http.request('GET', 'http://tv.mail.ru/ext/admtv/?sch.tv_event_id=%s&sch.channel_region_id=147' % (programme['id']))
                 descr = clean(json.loads(rdescr.data)['tv_event']['descr'])
+                start = datetime.strptime(programme['start'], '%Y-%m-%d %H:%M:%S')
+                start.timezone('Europe/Moscow')
+                stop = datetime.strptime(programme['stop'], '%Y-%m-%d %H:%M:%S')
+                stop.timezone('Europe/Moscow')
                 core_models.Programme(
                     channel=self.core_channel,
                     name=programme['name'],
-                    start=datetime.strptime(programme['start'], '%Y-%m-%d %H:%M:%S'),
-                    stop=datetime.strptime(programme['stop'], '%Y-%m-%d %H:%M:%S'),
+                    start=start,
+                    stop=stop,
                     description=descr,
                 ).save()
                 sleep(2)
