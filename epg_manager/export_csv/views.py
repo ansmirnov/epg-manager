@@ -4,5 +4,5 @@ from epg_core.models import *
 
 def export_csv(request):
     return render_to_response('export_csv.csv', {
-        'programmes': Programme.objects.all(),
+        'programmes': Programme.objects.all().order_by('start'),
     })

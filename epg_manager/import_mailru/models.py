@@ -17,7 +17,7 @@ class MailRuChannel(models.Model):
         days = json.loads(r.data)['state']['days']
         for day in days:
             curday = datetime.strptime(day, '%Y-%m-%d')
-            if curday < date.today():
+            if curday.date() < date.today():
                 continue
             r = http.request('GET', 'http://tv.mail.ru/ext/admtv/?sch.main=1&sch.channel=%d&sch.date=%s' % (self.mailru_id, day))
             data = json.loads(r.data)
