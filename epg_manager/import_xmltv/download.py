@@ -4,9 +4,17 @@ __email__ = 'mail@ansmirnov.ru'
 
 import models
 from datetime import datetime
+import time
 from dateutil.parser import parse
 from epg_core import models as core_models
 import cElementTree as ET
+import tempfile
+import os
+
+
+def download_file(url, filename=tempfile.NamedTemporaryFile().name+'.xml'):
+    os.system('./import_xmltv/download_xmltv.sh %s %s' % (url, filename))
+    return filename
 
 class Channel():
     def __init__(self, elem):
@@ -63,10 +71,11 @@ def programmes(input_file):
 def download_programmes():
     for afile in models.File.objects.all():
         need_channels = {}
+        fn = download_file(afile.filename)
         for channel in models.XMLTVChannel.objects.all().filter(file=afile):
             need_channels[channel.xmltv_id] = channel
             channel.core_channel.clear_programmes()
-        for programme in programmes(afile.filename):
+        for programme in programmes(fn):
             xmltv_id = int(programme.channel)
             if xmltv_id in need_channels.keys():
                 core_models.Programme(
@@ -76,3 +85,4 @@ def download_programmes():
                     stop=programme.stop,
                     description=programme.desc,
                 ).save()
+        os.remove(fn)
