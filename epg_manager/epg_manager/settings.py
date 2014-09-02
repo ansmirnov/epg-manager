@@ -132,6 +132,7 @@ INSTALLED_APPS = (
 #    'import_mailru',
     'import_xmltv',
     'export_csv',
+    'export_print',
     'luminato',
 )
 
