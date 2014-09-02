@@ -33,5 +33,5 @@ class MailRuChannel(models.Model):
                     stop=greenwich.localize(datetime.strptime(programme['stop'], '%Y-%m-%d %H:%M:%S')),
                     description=descr,
                 ).save()
-                sleep(2)
+                sleep(5)
 #                break
