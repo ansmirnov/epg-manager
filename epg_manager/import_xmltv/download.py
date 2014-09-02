@@ -10,10 +10,11 @@ from epg_core import models as core_models
 import cElementTree as ET
 import tempfile
 import os
+from epg_manager.settings import BASE_DIR
 
 
 def download_file(url, filename=tempfile.NamedTemporaryFile().name+'.xml'):
-    os.system('./import_xmltv/download_xmltv.sh %s %s' % (url, filename))
+    os.system('%s/import_xmltv/download_xmltv.sh "%s" "%s"' % (BASE_DIR, url, filename))
     return filename
 
 class Channel():
@@ -76,7 +77,7 @@ def download_programmes():
             need_channels[channel.xmltv_id] = channel
             channel.core_channel.clear_programmes()
         for programme in programmes(fn):
-            xmltv_id = int(programme.channel)
+            xmltv_id = programme.channel
             if xmltv_id in need_channels.keys():
                 core_models.Programme(
                     channel=need_channels[xmltv_id].core_channel,
