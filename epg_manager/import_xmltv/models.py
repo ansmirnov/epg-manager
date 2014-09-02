@@ -10,9 +10,9 @@ class File(models.Model):
 
 class XMLTVChannel(models.Model):
     core_channel = models.ForeignKey(core_models.Channel)
-    xmltv_id = models.IntegerField()
+    xmltv_id = models.CharField(max_length=150)
     file = models.ForeignKey('File')
 
     def __unicode__(self):
-        return "%d %s" % (self.xmltv_id, self.core_channel.name)
+        return "%s %s" % (self.xmltv_id, self.core_channel.name)
 
