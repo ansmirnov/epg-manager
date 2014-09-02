@@ -86,4 +86,25 @@ def download_programmes():
                     stop=programme.stop,
                     description=programme.desc,
                 ).save()
+
+
+def download_programmes():
+    for afile in models.File.objects.all():
+        need_channels = {}
+        fn = download_file(afile.filename)
+        for channel in models.XMLTVChannel.objects.all().filter(file=afile):
+            need_channels[channel.xmltv_id] = channel
+            channel.core_channel.clear_programmes()
+        for programme in programmes(fn):
+            xmltv_id = programme.channel
+            if xmltv_id in need_channels.keys():
+                core_models.Programme(
+                    channel=need_channels[xmltv_id].core_channel,
+                    name=programme.title,
+                    start=programme.start,
+                    stop=programme.stop,
+                    description=programme.desc,
+                ).save()
+        os.remove(fn)
+
         os.remove(fn)

@@ -132,6 +132,7 @@ INSTALLED_APPS = (
 #    'import_mailru',
     'import_xmltv',
     'export_csv',
+    'luminato',
 )
 
 # A sample logging configuration. The only tangible logging
