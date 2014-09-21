@@ -1,0 +1,11 @@
+{% for channel in channels %}
+
+    <h1>{{ channel.name }}</h1>
+
+    {% for programme in channel.programme_set.all%}
+	{% ifequal programme.start.date date %}
+	<p><b>{{ programme.start|date:"H:i" }}</b> {{ programme.name }}</p>
+	{% endifequal %}
+    {% endfor %}
+
+{% endfor %}

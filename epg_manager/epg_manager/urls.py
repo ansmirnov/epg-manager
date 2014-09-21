@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'epg_manager.views.home', name='home'),
     url(r'^export_csv/', include('export_csv.urls')),
+    url(r'^export_print/', include('export_print.urls')),
     url(r'^luminato/', include('luminato.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
