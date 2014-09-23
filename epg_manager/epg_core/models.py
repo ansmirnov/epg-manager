@@ -2,8 +2,13 @@ from django.db import models
 import datetime
 
 
+class Stream(models.Model):
+    name = models.CharField(max_length=250)
+
+
 class Channel(models.Model):
     name = models.CharField(max_length=250)
+    stream = models.ForeignKey(Stream)
 
     def __unicode__(self):
         return self.name
