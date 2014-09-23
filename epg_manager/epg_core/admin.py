@@ -12,3 +12,4 @@ class ProgrammeAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Channel, ChannelAdmin)
 admin.site.register(models.Programme, ProgrammeAdmin)
+admin.site.register(models.Stream)
