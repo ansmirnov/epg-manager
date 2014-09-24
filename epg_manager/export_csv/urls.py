@@ -4,4 +4,5 @@ from export_csv.views import *
 
 urlpatterns = patterns('',
     url(r'^', export_csv),
+    url(r'^(\d+)', export_csv_stream),
 )
