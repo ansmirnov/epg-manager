@@ -5,6 +5,9 @@ import datetime
 class Stream(models.Model):
     name = models.CharField(max_length=250)
 
+    def __unicode__(self):
+	return self.name
+
 
 class Channel(models.Model):
     name = models.CharField(max_length=250)
